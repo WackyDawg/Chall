@@ -1,0 +1,62 @@
+[
+  {
+    "user_id": "IAFGUHCK",
+    "first_name": "Christiane",
+    "last_name": "Fontaine",
+    "birth_year": 1944,
+    "job": "Retired",
+    "residence": {
+      "city": "Ostwald",
+      "lat": "48.5425",
+      "lng": "7.7103"
+    }
+  },
+  {
+    "user_id": "RFLFWVQA",
+    "first_name": "Denise",
+    "last_name": "Fisher",
+    "birth_year": 1981,
+    "job": "Retail Entrepreneur",
+    "residence": {
+      "city": "St. Louis Park",
+      "lat": "44.9488",
+      "lng": "-93.3649"
+    }
+  },
+  {
+    "user_id": "IXTDRHTR",
+    "first_name": "Natasha",
+    "last_name": "Turner",
+    "birth_year": 1936,
+    "job": "Retired",
+    "residence": {
+      "city": "London",
+      "lat": "51.5072",
+      "lng": "-0.1275"
+    }
+  },
+  {
+    "user_id": "WNACROYX",
+    "first_name": "Craig",
+    "last_name": "Connor",
+    "birth_year": 1991,
+    "job": "Ride-share Driver",
+    "residence": {
+      "city": "Bath",
+      "lat": "51.3814",
+      "lng": "-2.3597"
+    }
+  },
+  {
+    "user_id": "DCGGXUWF",
+    "first_name": "George",
+    "last_name": "Neal",
+    "birth_year": 1931,
+    "job": "Retired",
+    "residence": {
+      "city": "Detroit",
+      "lat": "42.3834",
+      "lng": "-83.1024"
+    }
+  }
+]

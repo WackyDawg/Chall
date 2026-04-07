@@ -1,0 +1,244 @@
+{
+  "risk_patterns": [
+    {
+      "pattern_id": "P001",
+      "description": "Significant decline in physical activity (PA) combined with rising environmental exposure and sleep disruption.",
+      "key_signals": [
+        "pa_trend < -10",
+        "env_trend > 15",
+        "sleep_trend < -5"
+      ],
+      "pa_trend_threshold": -5.0,
+      "sleep_trend_threshold": -5.0,
+      "env_trend_threshold": 10.0,
+      "requires_specialist": false,
+      "age_group": "all",
+      "confidence": 0.8,
+      "seen_in_levels": [
+        2
+      ]
+    },
+    {
+      "pattern_id": "P001",
+      "description": "Severe multi-system deterioration characterized by steep declines in physical activity and sleep quality coinciding with sharply rising environmental exposure, indicating compounded physiological stress.",
+      "key_signals": [
+        "steep pa_trend decline",
+        "severe sleep_trend disruption",
+        "high env_trend exposure",
+        "low recent baselines"
+      ],
+      "pa_trend_threshold": -15.0,
+      "sleep_trend_threshold": -15.0,
+      "env_trend_threshold": 18.0,
+      "requires_specialist": false,
+      "age_group": "all",
+      "confidence": 0.9,
+      "seen_in_levels": [
+        2
+      ]
+    }
+  ],
+  "level_summaries": {
+    "2": "Risk at this level is driven by severe, simultaneous deterioration across physical activity, sleep, and environmental exposure, with trend magnitudes far exceeding prior baselines and recent values dropping into critical ranges."
+  },
+  "flagged_citizens": {
+    "ETGUMXJD": [
+      2
+    ],
+    "GGGZNWZD": [
+      2,
+      2,
+      2
+    ],
+    "IGKMHDGI": [
+      2,
+      2,
+      2
+    ],
+    "QOHAQRQI": [
+      2,
+      2,
+      2
+    ]
+  },
+  "safe_citizens": {
+    "BONIFJME": [
+      2,
+      2,
+      2
+    ],
+    "DQQTUJMK": [
+      2,
+      2,
+      2
+    ],
+    "FLDORAQE": [
+      2,
+      2,
+      2
+    ],
+    "GPXWMDDO": [
+      2,
+      2,
+      2
+    ],
+    "JYEAPNDE": [
+      2,
+      2,
+      2
+    ],
+    "KIJIPGYX": [
+      2,
+      2,
+      2
+    ],
+    "OKJSZSSW": [
+      2,
+      2,
+      2
+    ],
+    "RMYCVSOK": [
+      2,
+      2,
+      2
+    ],
+    "TGUUITBW": [
+      2,
+      2,
+      2
+    ],
+    "UEAPYAVH": [
+      2,
+      2,
+      2
+    ],
+    "UGACLBDX": [
+      2,
+      2,
+      2
+    ],
+    "ETGUMXJD": [
+      2,
+      2
+    ]
+  },
+  "evolution_notes": [
+    "[L2\u2192NEXT] M",
+    "[L2\u2192NEXT] o",
+    "[L2\u2192NEXT] n",
+    "[L2\u2192NEXT] i",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] o",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] u",
+    "[L2\u2192NEXT] b",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] l",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] h",
+    "[L2\u2192NEXT] i",
+    "[L2\u2192NEXT] f",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] i",
+    "[L2\u2192NEXT] n",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] l",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] p",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] a",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] c",
+    "[L2\u2192NEXT] h",
+    "[L2\u2192NEXT] i",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] c",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] u",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] a",
+    "[L2\u2192NEXT] n",
+    "[L2\u2192NEXT] d",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] u",
+    "[L2\u2192NEXT] b",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] l",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] n",
+    "[L2\u2192NEXT] v",
+    "[L2\u2192NEXT] i",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] o",
+    "[L2\u2192NEXT] n",
+    "[L2\u2192NEXT] m",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] n",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] a",
+    "[L2\u2192NEXT] l",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] t",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] o",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] a",
+    "[L2\u2192NEXT] c",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] o",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] d",
+    "[L2\u2192NEXT] i",
+    "[L2\u2192NEXT] v",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT]  ",
+    "[L2\u2192NEXT] d",
+    "[L2\u2192NEXT] e",
+    "[L2\u2192NEXT] m",
+    "[L2\u2192NEXT] o",
+    "[L2\u2192NEXT] g",
+    "[L2\u2192NEXT] r",
+    "[L2\u2192NEXT] a",
+    "[L2\u2192NEXT] p",
+    "[L2\u2192NEXT] h",
+    "[L2\u2192NEXT] i",
+    "[L2\u2192NEXT] c",
+    "[L2\u2192NEXT] s",
+    "[L2\u2192NEXT] .",
+    "[L2 threshold rec] 0.45",
+    "[L2\u2192NEXT] non-linear trend accelerations",
+    "[L2\u2192NEXT] compensatory biomarker failure",
+    "[L2\u2192NEXT] specialist intervention lag",
+    "[L2\u2192NEXT] emerging metabolic or cardiovascular signals",
+    "[L2 threshold rec] 0.45"
+  ],
+  "threshold_history": {
+    "2": 0.45
+  },
+  "current_level": 2
+}

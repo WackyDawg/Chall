@@ -1,0 +1,47 @@
+=== Level 2 Assessment Detail ===
+
+GGGZNWZD | FLAGGED | blended=1.000 llm=None rule=1.000
+  Reasoning: High-confidence rule signal
+
+QOHAQRQI | FLAGGED | blended=1.000 llm=None rule=1.000
+  Reasoning: High-confidence rule signal
+
+IGKMHDGI | FLAGGED | blended=1.000 llm=None rule=1.000
+  Reasoning: High-confidence rule signal
+
+ETGUMXJD | safe | blended=0.310 llm=0.4 rule=0.100
+  Reasoning: Minor decline in physical activity and environmental exposure, but sleep quality remains stable. No escalation in medical events or significant behavioral withdrawal.
+
+DQQTUJMK | safe | blended=0.185 llm=0.2 rule=0.150
+  Reasoning: Stable physical activity and sleep quality, with only a minor increase in environmental exposure. No escalation in medical events or behavioral withdrawal.
+
+JYEAPNDE | safe | blended=0.050 llm=None rule=0.050
+  Reasoning: High-confidence stable rule signal
+
+OKJSZSSW | safe | blended=0.050 llm=None rule=0.050
+  Reasoning: High-confidence stable rule signal
+
+BONIFJME | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+
+TGUUITBW | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+
+KIJIPGYX | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+
+RMYCVSOK | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+
+UGACLBDX | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+
+UEAPYAVH | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+
+FLDORAQE | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+
+GPXWMDDO | safe | blended=0.000 llm=None rule=0.000
+  Reasoning: High-confidence stable rule signal
+

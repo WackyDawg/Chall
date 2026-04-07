@@ -1,0 +1,182 @@
+[
+  {
+    "user_id": "RMYCVSOK",
+    "first_name": "Craig",
+    "last_name": "Daniel",
+    "birth_year": 1995,
+    "job": "Student",
+    "residence": {
+      "city": "Dallas",
+      "lat": "32.7935",
+      "lng": "-96.7667"
+    }
+  },
+  {
+    "user_id": "BONIFJME",
+    "first_name": "Sarah",
+    "last_name": "Callahan",
+    "birth_year": 1989,
+    "job": "Office Clerk",
+    "residence": {
+      "city": "Brookhaven",
+      "lat": "40.8320",
+      "lng": "-72.9517"
+    }
+  },
+  {
+    "user_id": "QOHAQRQI",
+    "first_name": "Kelly",
+    "last_name": "Davis",
+    "birth_year": 1992,
+    "job": "Digital Creator",
+    "residence": {
+      "city": "Houston",
+      "lat": "29.7860",
+      "lng": "-95.3885"
+    }
+  },
+  {
+    "user_id": "UEAPYAVH",
+    "first_name": "Mira",
+    "last_name": "Budig",
+    "birth_year": 2003,
+    "job": "Student",
+    "residence": {
+      "city": "Dortmund",
+      "lat": "51.5139",
+      "lng": "7.4653"
+    }
+  },
+  {
+    "user_id": "DQQTUJMK",
+    "first_name": "Valeska",
+    "last_name": "Kobelt",
+    "birth_year": 1945,
+    "job": "Retired",
+    "residence": {
+      "city": "Reichenbach/Vogtland",
+      "lat": "50.6167",
+      "lng": "12.3000"
+    }
+  },
+  {
+    "user_id": "ETGUMXJD",
+    "first_name": "Samantha",
+    "last_name": "Dobson",
+    "birth_year": 1955,
+    "job": "Retired",
+    "residence": {
+      "city": "London",
+      "lat": "51.5072",
+      "lng": "-0.1275"
+    }
+  },
+  {
+    "user_id": "OKJSZSSW",
+    "first_name": "Evamaria",
+    "last_name": "Junitz",
+    "birth_year": 1941,
+    "job": "Retired",
+    "residence": {
+      "city": "Stolberg",
+      "lat": "50.7667",
+      "lng": "6.2333"
+    }
+  },
+  {
+    "user_id": "JYEAPNDE",
+    "first_name": "Jesse",
+    "last_name": "Garcia",
+    "birth_year": 1937,
+    "job": "Retired",
+    "residence": {
+      "city": "Bronx",
+      "lat": "40.8501",
+      "lng": "-73.8662"
+    }
+  },
+  {
+    "user_id": "IGKMHDGI",
+    "first_name": "Joseph",
+    "last_name": "Klingelhöfer",
+    "birth_year": 1983,
+    "job": "Restaurant Owner",
+    "residence": {
+      "city": "Dingolfing",
+      "lat": "48.6333",
+      "lng": "12.5000"
+    }
+  },
+  {
+    "user_id": "TGUUITBW",
+    "first_name": "Jessica",
+    "last_name": "Molina",
+    "birth_year": 1978,
+    "job": "Business Manager",
+    "residence": {
+      "city": "Mesa",
+      "lat": "33.4015",
+      "lng": "-111.7178"
+    }
+  },
+  {
+    "user_id": "UGACLBDX",
+    "first_name": "Isabelle",
+    "last_name": "Collin",
+    "birth_year": 1981,
+    "job": "Company Owner",
+    "residence": {
+      "city": "Paris",
+      "lat": "48.8567",
+      "lng": "2.3522"
+    }
+  },
+  {
+    "user_id": "GGGZNWZD",
+    "first_name": "Luc",
+    "last_name": "Verdier",
+    "birth_year": 1990,
+    "job": "Administrative Assistant",
+    "residence": {
+      "city": "Auray",
+      "lat": "47.6686",
+      "lng": "-2.9814"
+    }
+  },
+  {
+    "user_id": "FLDORAQE",
+    "first_name": "Laura",
+    "last_name": "Santana",
+    "birth_year": 2000,
+    "job": "Student",
+    "residence": {
+      "city": "Nashville",
+      "lat": "36.1715",
+      "lng": "-86.7842"
+    }
+  },
+  {
+    "user_id": "GPXWMDDO",
+    "first_name": "Eugenia",
+    "last_name": "Brichese",
+    "birth_year": 1973,
+    "job": "Company Owner",
+    "residence": {
+      "city": "Somma Vesuviana",
+      "lat": "40.8725",
+      "lng": "14.4369"
+    }
+  },
+  {
+    "user_id": "KIJIPGYX",
+    "first_name": "Susanne",
+    "last_name": "Adolph",
+    "birth_year": 1991,
+    "job": "Freelance Designer",
+    "residence": {
+      "city": "Bochum",
+      "lat": "51.4819",
+      "lng": "7.2158"
+    }
+  }
+]
