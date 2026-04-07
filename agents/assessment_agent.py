@@ -7,12 +7,12 @@ Outputs a risk probability and reasoning per citizen.
 
 import os
 import json
-import pandas as pd
+import re
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from langfuse import observe
 
-from utils.langfuse_manager import get_client, get_callback_handler
+from utils.langfuse_manager import get_callback_handler, update_session
 from agents.memory_agent import MemoryAgent
 
 
@@ -56,26 +56,50 @@ class AssessmentAgent:
     def __init__(self, memory: MemoryAgent, session_id: str):
         self.memory = memory
         self.session_id = session_id
-        api_key = os.getenv("OPENROUTER_API_KEY")
+        api_key = self._clean_env("OPENROUTER_API_KEY")
         base_url = "https://openrouter.ai/api/v1"
 
-        default_fast_model = os.getenv("OPENROUTER_MODEL", "gpt-4o-mini")
-        default_strong_model = os.getenv("OPENROUTER_MODEL", "gpt-4o")
+        default_fast_model = self._resolve_model("OPENROUTER_MODEL", "gpt-4o-mini")
+        default_strong_model = self._resolve_model("OPENROUTER_MODEL", "gpt-4o")
+        self.llm_enabled = bool(api_key)
+        if not self.llm_enabled:
+            print("[Assessment] OPENROUTER_API_KEY missing/invalid. Falling back to rules for all citizens.")
 
         self.fast_llm = ChatOpenAI(
             api_key=api_key, base_url=base_url,
-            model=os.getenv("FAST_MODEL", default_fast_model),
+            model=self._resolve_model("FAST_MODEL", default_fast_model),
             temperature=0.1, max_tokens=700,
         )
         self.strong_llm = ChatOpenAI(
             api_key=api_key, base_url=base_url,
-            model=os.getenv("STRONG_MODEL", default_strong_model),
+            model=self._resolve_model("STRONG_MODEL", default_strong_model),
             temperature=0.1, max_tokens=3000,
         )
         self.threshold = float(os.getenv("CLASSIFICATION_THRESHOLD", "0.45"))
         self.batch_size = int(os.getenv("BATCH_SIZE", "10"))
         self.rule_safe_cutoff = float(os.getenv("RULE_SAFE_CUTOFF", "0.20"))
         self.rule_flag_cutoff = float(os.getenv("RULE_FLAG_CUTOFF", "0.75"))
+
+    def _clean_env(self, key: str, default: str = "") -> str:
+        raw = os.getenv(key, default)
+        if raw is None:
+            return default
+        cleaned = str(raw).replace("\\n", "\n").strip()
+        if "\n" in cleaned:
+            cleaned = cleaned.splitlines()[0].strip()
+        return cleaned
+
+    def _resolve_model(self, key: str, fallback: str) -> str:
+        model = self._clean_env(key, fallback)
+        if not model or model.lower() in {"openrouter/free", "free"}:
+            return fallback
+        return model
+
+    def _normalize_citizen_id(self, cid: str | None) -> str | None:
+        if cid is None:
+            return None
+        norm = str(cid).strip().upper()
+        return norm if re.fullmatch(r"[A-Z0-9]{8}", norm) else None
 
     def _compact_profile_text(self, profile: dict) -> str:
         return (
@@ -107,23 +131,30 @@ class AssessmentAgent:
             candidate = ""
             for chunk in chunks:
                 c = chunk.strip()
-                if "{" in c and "}" in c:
+                if ("{" in c and "}" in c) or ("[" in c and "]" in c):
                     candidate = c
                     break
             text = candidate or text
             if text.startswith("json"):
                 text = text[4:].strip()
 
-        if not text.startswith("{"):
-            start = text.find("{")
-            end = text.rfind("}")
-            if start != -1 and end != -1 and end > start:
-                text = text[start:end + 1]
+        if not text.startswith("{") and not text.startswith("["):
+            dict_start, dict_end = text.find("{"), text.rfind("}")
+            list_start, list_end = text.find("["), text.rfind("]")
+            candidates = []
+            if dict_start != -1 and dict_end != -1 and dict_end > dict_start:
+                candidates.append(text[dict_start:dict_end + 1])
+            if list_start != -1 and list_end != -1 and list_end > list_start:
+                candidates.append(text[list_start:list_end + 1])
+            if candidates:
+                text = max(candidates, key=len)
 
         result = json.loads(text)
         if isinstance(result, dict):
             assessments = result.get("assessments", [])
             return assessments if isinstance(assessments, list) else []
+        if isinstance(result, list):
+            return result
         return []
 
     @observe()
@@ -149,6 +180,7 @@ Assess each citizen above. Respond ONLY with valid JSON.
         ]
 
         try:
+            update_session(self.session_id)
             response = llm.invoke(
                 messages,
                 config={
@@ -175,7 +207,7 @@ Assess each citizen above. Respond ONLY with valid JSON.
         """
         print(f"\n[Assessment] Assessing {len(profiles)} citizens...")
 
-        if deterministic_rules_only:
+        if deterministic_rules_only or not self.llm_enabled:
             print("[Assessment] Locked deterministic mode: rules-only (LLM bypassed)")
             all_assessments = {}
             for cid in sorted(profiles.keys(), key=lambda c: rule_scores.get(c, 0), reverse=True):
@@ -240,9 +272,10 @@ Assess each citizen above. Respond ONLY with valid JSON.
             assessments = self._call_llm(texts, use_strong=use_strong)
 
             for item in assessments:
-                cid = item.get("citizen_id")
-                if cid:
-                    llm_score = float(item.get("risk_score", 0))
+                cid = self._normalize_citizen_id(item.get("citizen_id"))
+                if cid and cid in profiles:
+                    llm_score = float(item.get("risk_score", 0) or 0)
+                    llm_score = min(max(llm_score, 0.0), 1.0)
                     rule_s = rule_scores.get(cid, 0)
                     blended = 0.70 * llm_score + 0.30 * rule_s
 
@@ -261,6 +294,8 @@ Assess each citizen above. Respond ONLY with valid JSON.
                         blended_cap = float(os.getenv("L2PLUS_BLENDED_CAP", "0.42"))
                         if rule_s <= low_rule_guard and llm_score >= llm_spike_guard and no_escalation:
                             blended = min(blended, blended_cap)
+                        if rule_s < 0.18 and llm_score < 0.65 and blended >= self.threshold:
+                            blended = min(blended, self.threshold - 0.01)
 
                     all_assessments[cid] = {
                         "citizen_id": cid,

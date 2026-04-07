@@ -10,6 +10,7 @@ Top-level orchestrator. Runs the full pipeline per level:
 """
 
 import os
+import re
 from pathlib import Path
 
 from utils.langfuse_manager import generate_session_id, ensure_session_trace, flush, print_cost_summary
@@ -117,7 +118,11 @@ class Coordinator:
 
     def _write_output(self, flagged: list[str], path: Path):
         """Write required ASCII output file — one Citizen ID per line."""
-        safe_ids = sorted({str(cid).strip().upper() for cid in flagged if isinstance(cid, str) and len(str(cid).strip()) == 8 and str(cid).strip().isalnum()})
+        safe_ids = sorted({
+            str(cid).strip().upper()
+            for cid in flagged
+            if isinstance(cid, str) and re.fullmatch(r"[A-Za-z0-9]{8}", str(cid).strip())
+        })
         content = "\n".join(safe_ids)
         if content:
             content += "\n"

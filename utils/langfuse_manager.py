@@ -14,13 +14,24 @@ load_dotenv()
 
 _client: Langfuse | None = None
 
+
+def _clean_env_value(name: str, default: str = "") -> str:
+    """Read env var and normalize accidental escaped newlines/whitespace."""
+    raw = os.getenv(name, default)
+    if raw is None:
+        return default
+    cleaned = str(raw).replace("\\n", "\n").strip()
+    if "\n" in cleaned:
+        cleaned = cleaned.splitlines()[0].strip()
+    return cleaned
+
 def get_client() -> Langfuse:
     global _client
     if _client is None:
         _client = Langfuse(
-            public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
-            secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
-            host=os.getenv("LANGFUSE_HOST", "https://challenges.reply.com/langfuse"),
+            public_key=_clean_env_value("LANGFUSE_PUBLIC_KEY"),
+            secret_key=_clean_env_value("LANGFUSE_SECRET_KEY"),
+            host=_clean_env_value("LANGFUSE_HOST", "https://challenges.reply.com/langfuse"),
         )
     return _client
 
@@ -33,7 +44,7 @@ def generate_session_id() -> str:
     return f"{team}-{ulid.new().str}"
 
 def get_callback_handler() -> CallbackHandler:
-    return CallbackHandler()
+    return CallbackHandler(langfuse=get_client())
 
 def update_session(session_id: str):
     client = get_client()
@@ -50,6 +61,7 @@ def _session_marker():
 
 def ensure_session_trace(session_id: str):
     with propagate_attributes(session_id=session_id):
+        update_session(session_id)
         _session_marker()
 
 
