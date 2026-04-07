@@ -83,6 +83,17 @@ def rule_score(profile: dict) -> float:
     if pa_vol > 8:
         score += 0.05
 
+    # --- Compound-signal bonus (improves L2/L3 recall without over-flagging) ---
+    decline_signals = 0
+    if pa_trend <= -8:
+        decline_signals += 1
+    if sleep_trend <= -6:
+        decline_signals += 1
+    if env_trend >= 12:
+        decline_signals += 1
+    if decline_signals >= 2:
+        score += 0.08
+
     # --- Age factor (elderly amplify risk slightly) ---
     age = profile.get("age") or 0
     if age >= 80:

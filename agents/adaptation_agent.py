@@ -10,7 +10,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from langfuse import observe
 
-from utils.langfuse_manager import get_client, get_callback_handler
+from utils.langfuse_manager import get_callback_handler, update_session
 from agents.memory_agent import MemoryAgent, RiskPattern
 
 
@@ -47,13 +47,49 @@ class AdaptationAgent:
         self.memory = memory
         self.session_id = session_id
         self._pattern_counter = 0
-        default_fast_model = os.getenv("OPENROUTER_MODEL", "gpt-4o-mini")
+        default_fast_model = self._resolve_model("OPENROUTER_MODEL", "gpt-4o-mini")
         self.llm = ChatOpenAI(
-            api_key=os.getenv("OPENROUTER_API_KEY"),
+            api_key=self._clean_env("OPENROUTER_API_KEY"),
             base_url="https://openrouter.ai/api/v1",
-            model=os.getenv("FAST_MODEL", default_fast_model),
+            model=self._resolve_model("FAST_MODEL", default_fast_model),
             temperature=0.2, max_tokens=600,
         )
+
+    def _clean_env(self, key: str, default: str = "") -> str:
+        raw = os.getenv(key, default)
+        if raw is None:
+            return default
+        cleaned = str(raw).replace("\\n", "\n").strip()
+        if "\n" in cleaned:
+            cleaned = cleaned.splitlines()[0].strip()
+        return cleaned
+
+    def _resolve_model(self, key: str, fallback: str) -> str:
+        model = self._clean_env(key, fallback)
+        if not model or model.lower() in {"openrouter/free", "free"}:
+            return fallback
+        return model
+
+    def _extract_json_payload(self, content) -> dict:
+        text = str(content).strip()
+        if text.startswith("```"):
+            for chunk in text.split("```"):
+                c = chunk.strip()
+                if c.startswith("json"):
+                    c = c[4:].strip()
+                if c.startswith("{") and c.endswith("}"):
+                    text = c
+                    break
+        if not text.startswith("{"):
+            start = text.find("{")
+            end = text.rfind("}")
+            if start != -1 and end != -1 and end > start:
+                text = text[start:end + 1]
+        try:
+            parsed = json.loads(text)
+            return parsed if isinstance(parsed, dict) else {}
+        except Exception:
+            return {}
 
     def _next_pid(self):
         self._pattern_counter += 1
@@ -110,6 +146,7 @@ Respond ONLY with valid JSON.
 
         result = {}
         try:
+            update_session(self.session_id)
             response = self.llm.invoke(
                 messages,
                 config={
@@ -117,12 +154,7 @@ Respond ONLY with valid JSON.
                     "metadata": {"langfuse_session_id": self.session_id},
                 },
             )
-            text = response.content.strip()
-            if text.startswith("```"):
-                text = text.split("```")[1]
-                if text.startswith("json"):
-                    text = text[4:]
-            result = json.loads(text)
+            result = self._extract_json_payload(response.content)
         except Exception as e:
             print(f"[Adaptation] Analysis failed: {e}")
 
